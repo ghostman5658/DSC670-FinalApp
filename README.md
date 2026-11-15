@@ -1,25 +1,28 @@
-# 🎈 Blank app template
+# Meta earnings-call voice
 
-A simple Streamlit app template for you to modify!
+A Streamlit app for the DSC670 final milestone. Enter an analyst question and compare a Qwen2.5-0.5B model fine-tuned on Meta's public earnings-call Q&A with the unmodified base model.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+The model weights are hosted at [ghostman5658/dsc670-meta-earnings-qwen2.5-0.5b-q8](https://huggingface.co/ghostman5658/dsc670-meta-earnings-qwen2.5-0.5b-q8). They run on CPU with PyTorch and Transformers, so no paid API is called.
 
-### How to run it on your own machine
+## Run locally
 
-Prerequisite: install `uv` if you don't already have it.
+Use Python 3.12.
 
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run streamlit_app.py
 ```
-$ curl -LsSf https://astral.sh/uv/install.sh | sh
-```
 
-1. Sync the dependencies
+The first run downloads about 2 GB of model files (one copy per model). Only one model is kept in memory at a time, which keeps the app within Streamlit Community Cloud's memory limit.
 
-   ```
-   $ uv sync
-   ```
+## Deploy on Streamlit Community Cloud
 
-2. Run the app
+1. Create the app from this repo with `streamlit_app.py` as the entry point.
+2. In **Advanced settings**, choose Python 3.12.
+3. Under **Sharing**, decide who can view the app.
 
-   ```
-   $ uv run streamlit run streamlit_app.py
-   ```
+## Caveat
+
+The fine-tuned model scored worse than the base model in the Week 8 held-out evaluation. It can state figures that are not in the source, so treat its numbers as unverified.
